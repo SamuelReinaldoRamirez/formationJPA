@@ -51,7 +51,9 @@ public class Employee extends Person implements Serializable {
 	@Embedded
 	private Address contacts;
 
-	@OneToMany(mappedBy = "employee")
+//	@OneToMany(mappedBy = "employee")
+	//pour n'avoir à persister qu'employee et que job suive
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "employee")
     private Set<Job> jobs = new HashSet<>();
 
 	@ManyToOne
@@ -125,11 +127,7 @@ public class Employee extends Person implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((commissionPct == null) ? 0 : commissionPct.hashCode());
-		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
-		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((hireDate == null) ? 0 : hireDate.hashCode());
-		result = prime * result + ((jobs == null) ? 0 : jobs.hashCode());
-		result = prime * result + ((manager == null) ? 0 : manager.hashCode());
 		result = prime * result + ((salary == null) ? 0 : salary.hashCode());
 		return result;
 	}
@@ -148,30 +146,10 @@ public class Employee extends Person implements Serializable {
 				return false;
 		} else if (!commissionPct.equals(other.commissionPct))
 			return false;
-		if (contacts == null) {
-			if (other.contacts != null)
-				return false;
-		} else if (!contacts.equals(other.contacts))
-			return false;
-		if (department == null) {
-			if (other.department != null)
-				return false;
-		} else if (!department.equals(other.department))
-			return false;
 		if (hireDate == null) {
 			if (other.hireDate != null)
 				return false;
 		} else if (!hireDate.equals(other.hireDate))
-			return false;
-		if (jobs == null) {
-			if (other.jobs != null)
-				return false;
-		} else if (!jobs.equals(other.jobs))
-			return false;
-		if (manager == null) {
-			if (other.manager != null)
-				return false;
-		} else if (!manager.equals(other.manager))
 			return false;
 		if (salary == null) {
 			if (other.salary != null)
@@ -180,6 +158,8 @@ public class Employee extends Person implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 	
 	
 }

@@ -102,7 +102,7 @@ public class Job implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((idjob == null) ? 0 : idjob.hashCode());
 		result = prime * result + ((jobTitle == null) ? 0 : jobTitle.hashCode());
 		result = prime * result + ((maxSalary == null) ? 0 : maxSalary.hashCode());
 		result = prime * result + ((minSalary == null) ? 0 : minSalary.hashCode());
@@ -118,10 +118,10 @@ public class Job implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Job other = (Job) obj;
-		if (employee == null) {
-			if (other.employee != null)
+		if (idjob == null) {
+			if (other.idjob != null)
 				return false;
-		} else if (!employee.equals(other.employee))
+		} else if (!idjob.equals(other.idjob))
 			return false;
 		if (jobTitle == null) {
 			if (other.jobTitle != null)
