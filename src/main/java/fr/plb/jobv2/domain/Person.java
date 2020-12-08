@@ -22,7 +22,6 @@ public class Person implements Serializable {
 //	@SequenceGenerator(name = "sequence-generator", sequenceName = "seqperson", initialValue = 5, allocationSize = 100)
 //    private Long id;
 
-	@EmbeddedId
 	public PersonId getPersonId() {
 		return personId;
 	}

@@ -1,11 +1,15 @@
 package fr.plb.jobv2.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,7 +32,10 @@ public class Department implements Serializable {
 	@OneToOne
     private Location location;
 
-//    private Set<Employee> employees = new HashSet<>();
+	//mappedBy le nom de l'attribut dans Employee
+	//quand je persist un dept ca persist aussi les employee correspondants.
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "department")
+	private Set<Employee> employees = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -53,14 +60,14 @@ public class Department implements Serializable {
     public void setLocation(Location location) {
         this.location = location;
     }
-//
-//    public Set<Employee> getEmployees() {
-//        return employees;
-//    }
-//
-//    public void setEmployees(Set<Employee> employees) {
-//        this.employees = employees;
-//    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
     
     public Department() {
     	

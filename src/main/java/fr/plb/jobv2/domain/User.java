@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -36,7 +37,8 @@ public class User implements Serializable {
 	@Column
     private String email;
 
-//    private Set<Authority> authorities = new HashSet<>();
+	@OneToMany
+    private Set<Authority> authorities = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -86,13 +88,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
-//    public Set<Authority> getAuthorities() {
-//        return authorities;
-//    }
-//
-//    public void setAuthorities(Set<Authority> authorities) {
-//        this.authorities = authorities;
-//    }
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
     
     public User() {
     	

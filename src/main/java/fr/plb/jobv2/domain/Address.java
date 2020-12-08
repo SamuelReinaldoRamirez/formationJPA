@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class Address implements Serializable{
@@ -31,7 +29,8 @@ public class Address implements Serializable{
     @Column
     private String stateProvince;
 
-//	    private Country country;
+    @ManyToOne
+	private Country country;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -77,12 +76,12 @@ public class Address implements Serializable{
         this.stateProvince = stateProvince;
     }
 
-//	    public Country getCountry() {
-//	        return country;
-//	    }
-//
-//	    public void setCountry(Country country) {
-//	        this.country = country;
-//	    }
+	    public Country getCountry() {
+	        return country;
+	    }
+
+	    public void setCountry(Country country) {
+	        this.country = country;
+	    }
 
 }

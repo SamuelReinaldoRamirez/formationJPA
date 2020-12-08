@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,7 +19,7 @@ public class Task implements Serializable {
 	@Id
 	@GeneratedValue(generator = "sequence-generator")
 	@SequenceGenerator(name = "sequence-generator", sequenceName = "seqtask", initialValue = 5, allocationSize = 100)
-    private Long id;
+    private Long idtask;
 
 	@Column
     private String title;
@@ -26,14 +27,15 @@ public class Task implements Serializable {
 	@Column
     private String description;
 
-//    private Set<Job> jobs = new HashSet<>();
+	@ManyToMany(mappedBy = "tasks")
+    private Set<Job> jobs = new HashSet<>();
 
-    public Long getId() {
-        return id;
+    public Long getIdtask() {
+        return idtask;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdtask(Long id) {
+        this.idtask = id;
     }
 
     public String getTitle() {
@@ -52,13 +54,13 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-//    public Set<Job> getJobs() {
-//        return jobs;
-//    }
-//
-//    public void setJobs(Set<Job> jobs) {
-//        this.jobs = jobs;
-//    }
+    public Set<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(Set<Job> jobs) {
+        this.jobs = jobs;
+    }
     
     public Task() {
     	

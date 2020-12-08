@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -19,7 +22,7 @@ public class Job implements Serializable {
 	@Id
 	@GeneratedValue(generator = "sequence-generator")
 	@SequenceGenerator(name = "sequence-generator", sequenceName = "seqjob", initialValue = 5, allocationSize = 100)
-    private Long id;
+    private Long idjob;
 
 	@Column
     private String jobTitle;
@@ -30,17 +33,25 @@ public class Job implements Serializable {
 	@Column
     private Long maxSalary;
 
-//    private Set<Task> tasks = new HashSet<>();
+//	@ManyToMany(mappedBy = "jobs") on ne peut pas avoir à la fois @mappedby et @joinTable
+	//du coté de tasks, on met que mappedby
+	@ManyToMany
+	@JoinTable(
+	        name = "jobstasks", 
+	        joinColumns = { @JoinColumn(name = "jobid", referencedColumnName = "idjob") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "taskid", referencedColumnName = "idtask") }
+	    )
+    private Set<Task> tasks = new HashSet<>();
 
 	@ManyToOne
     private Employee employee;
 
-    public Long getId() {
-        return id;
+    public Long getIdjob() {
+        return idjob;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdjob(Long id) {
+        this.idjob = id;
     }
 
     public String getJobTitle() {
@@ -67,13 +78,13 @@ public class Job implements Serializable {
         this.maxSalary = maxSalary;
     }
 
-//    public Set<Task> getTasks() {
-//        return tasks;
-//    }
-//
-//    public void setTasks(Set<Task> tasks) {
-//        this.tasks = tasks;
-//    }
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     public Employee getEmployee() {
         return employee;
@@ -86,4 +97,49 @@ public class Job implements Serializable {
     public Job() {
     	
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((jobTitle == null) ? 0 : jobTitle.hashCode());
+		result = prime * result + ((maxSalary == null) ? 0 : maxSalary.hashCode());
+		result = prime * result + ((minSalary == null) ? 0 : minSalary.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Job other = (Job) obj;
+		if (employee == null) {
+			if (other.employee != null)
+				return false;
+		} else if (!employee.equals(other.employee))
+			return false;
+		if (jobTitle == null) {
+			if (other.jobTitle != null)
+				return false;
+		} else if (!jobTitle.equals(other.jobTitle))
+			return false;
+		if (maxSalary == null) {
+			if (other.maxSalary != null)
+				return false;
+		} else if (!maxSalary.equals(other.maxSalary))
+			return false;
+		if (minSalary == null) {
+			if (other.minSalary != null)
+				return false;
+		} else if (!minSalary.equals(other.minSalary))
+			return false;
+		return true;
+	}
+    
+    
 }
