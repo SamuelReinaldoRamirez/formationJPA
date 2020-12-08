@@ -3,21 +3,33 @@ package fr.plb.jobv2.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+//@Entity
 @Entity
 @Table(name="Person")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "person_type")
 public class Person implements Serializable {
 
 //	@Id
 //	@GeneratedValue(generator = "sequence-generator")
 //	@SequenceGenerator(name = "sequence-generator", sequenceName = "seqperson", initialValue = 5, allocationSize = 100)
 //    private Long id;
+
+	@EmbeddedId
+	public PersonId getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(PersonId personId) {
+		this.personId = personId;
+	}
 
 	@EmbeddedId
 	private PersonId personId;

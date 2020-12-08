@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -32,7 +33,8 @@ public class Location implements Serializable {
     @Column
     private String stateProvince;
 
-//    private Country country;
+    @OneToOne
+    private Country country;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -78,13 +80,13 @@ public class Location implements Serializable {
         this.stateProvince = stateProvince;
     }
 
-//    public Country getCountry() {
-//        return country;
-//    }
-//
-//    public void setCountry(Country country) {
-//        this.country = country;
-//    }
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
     
     public Location() {
     	

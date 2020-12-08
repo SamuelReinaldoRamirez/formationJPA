@@ -21,14 +21,20 @@ public class JobHistory implements Serializable {
 	@Column
     private Instant endDate;
 
+	//pas OneToOne car c'est une enum
+	//enumerated car sinon, les enum sont des int en bdd et du coup si on change l'ordre des enum, ca va etre n'importe quoi dans la bdd
 	@Column
+	@Enumerated(EnumType.STRING)
     private Language language;
 
-//    private Job job;
-//
-//    private Department department;
-//
-//    private Employee employee;
+	@OneToOne
+    private Job job;
+
+	@OneToOne
+    private Department department;
+
+	@ManyToOne
+    private Employee employee;
 
     public Long getId() {
         return id;
@@ -62,29 +68,29 @@ public class JobHistory implements Serializable {
         this.language = language;
     }
 
-//    public Job getJob() {
-//        return job;
-//    }
-//
-//    public void setJob(Job job) {
-//        this.job = job;
-//    }
-//
-//    public Department getDepartment() {
-//        return department;
-//    }
-//
-//    public void setDepartment(Department department) {
-//        this.department = department;
-//    }
-//
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
     
     public JobHistory() {
     	

@@ -1,13 +1,12 @@
 package fr.plb.jobv2.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,8 +25,8 @@ public class Department implements Serializable {
 	@Column
     private String departmentName;
 
-//	@Column
-//    private Location location;
+	@OneToOne
+    private Location location;
 
 //    private Set<Employee> employees = new HashSet<>();
 
@@ -47,13 +46,13 @@ public class Department implements Serializable {
         this.departmentName = departmentName;
     }
 
-//    public Location getLocation() {
-//        return location;
-//    }
-//
-//    public void setLocation(Location location) {
-//        this.location = location;
-//    }
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 //
 //    public Set<Employee> getEmployees() {
 //        return employees;

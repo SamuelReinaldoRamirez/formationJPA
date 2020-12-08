@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,8 +22,8 @@ public class Country implements Serializable {
 	@Column
     private String countryName;
 
-//	@Column
-//    private Region region;
+	@OneToOne
+    private Region region;
 
     public Long getId() {
         return id;
@@ -40,13 +41,13 @@ public class Country implements Serializable {
         this.countryName = countryName;
     }
 
-//    public Region getRegion() {
-//        return region;
-//    }
-//
-//    public void setRegion(Region region) {
-//        this.region = region;
-//    }
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
     
     public Country() {
     }

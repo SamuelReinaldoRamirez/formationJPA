@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,7 +32,8 @@ public class Job implements Serializable {
 
 //    private Set<Task> tasks = new HashSet<>();
 
-//    private Employee employee;
+	@ManyToOne
+    private Employee employee;
 
     public Long getId() {
         return id;
@@ -73,13 +75,13 @@ public class Job implements Serializable {
 //        this.tasks = tasks;
 //    }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
     
     public Job() {
     	
