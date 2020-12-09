@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -119,17 +125,71 @@ public class TestParameterBinding {
         TestTransaction.start();
         
         
-        //la query utile
-//        String query = "SELECT e FROM Employee as e join e.jobs as j WHERE j.maxSalary <= :maxsalary and j.minSalary >= :minsalary";
-        String query = "SELECT DISTINCT e FROM Employee e join e.jobs as j WHERE j.maxSalary <= :maxsalary and j.minSalary >= :minsalary";
-        TypedQuery<Employee> employeeTypedQuery = entityManager.createQuery(query, Employee.class);
-        employeeTypedQuery.setParameter("maxsalary", 2500L);
-        employeeTypedQuery.setParameter("minsalary", 1500L);
-        List<Employee> resultList = employeeTypedQuery.getResultList();
+        //la query utile en HQL
+//        String query = "SELECT DISTINCT e FROM Employee e join e.jobs as j WHERE j.maxSalary <= :maxsalary and j.minSalary >= :minsalary";
+//        TypedQuery<Employee> employeeTypedQuery0 = entityManager.createQuery(query, Employee.class);
+//        employeeTypedQuery0.setParameter("maxsalary", 2500L);
+//        employeeTypedQuery0.setParameter("minsalary", 1500L);
+//        List<Employee> resultList0 = employeeTypedQuery0.getResultList();
+//        for (Employee e : resultList0) {
+//        	log.info("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+//        	log.info(e.getEmail());
+//        }
+//        
+        //2emequery en hql
+//        TypedQuery<Employee> employeeTypedQuery = entityManager.createNamedQuery("employee.byjobTitle", Employee.class);
+//        employeeTypedQuery.setParameter("jobTitlee", "jobtitle");
+//        List<Employee> resultList = employeeTypedQuery.getResultList();
+//        for (Employee e : resultList) {
+//        	log.info("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+//        	log.info(e.getEmail());
+//        }
+        
+        //la query utile en Criteria  
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> from = query.from(Employee.class);
+//        Join<Employee, Job> employeeJobJoin = from.join("jobs", JoinType.LEFT);
+//        CriteriaQuery<Employee> where = query.where(criteriaBuilder.ge(employeeJobJoin.get("minSalary"), 1500L), 
+//        		criteriaBuilder.le(employeeJobJoin.get("maxSalary"), 2500L));
+//        where.distinct(true);
+//        TypedQuery<Employee> wherequery = entityManager.createQuery(where);
+//        List<Employee> resultList = wherequery.getResultList();
+//        for (Employee e : resultList) {
+//        	log.info("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
+//        	log.info(e.getEmail());
+//        }
+        
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+        Root<Employee> from = query.from(Employee.class);
+        Join<Employee, Job> employeeJobJoin = from.join("jobs", JoinType.LEFT);
+        query.where(criteriaBuilder.ge(employeeJobJoin.get("minSalary"), 1500L), 
+        		criteriaBuilder.le(employeeJobJoin.get("maxSalary"), 2500L));
+        query.distinct(true);
+        TypedQuery<Employee> wherequery = entityManager.createQuery(query);
+        List<Employee> resultList = wherequery.getResultList();
         for (Employee e : resultList) {
-        	log.info("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        	log.info("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
         	log.info(e.getEmail());
         }
+        
+        //correction:
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> from = query.from(Employee.class);
+//        query.distinct(true);
+//        Join<Employee, Job> jobEmployeeJoin = from.join("jobs", JoinType.LEFT);
+//        query.where(criteriaBuilder.ge(jobEmployeeJoin.get("minSalary"), 1500L),
+//                criteriaBuilder.le(jobEmployeeJoin.get("maxSalary"), 2500L));
+        
+        //correction 2emequery
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+//        Root<Employee> from = query.from(Employee.class);
+//        Join<Employee, Job> jobEmployeeJoin = from.join("jobs", JoinType.LEFT);
+//        query.where(criteriaBuilder.equal(jobEmployeeJoin.get("jobTitle"), "Developer"));
+       
 
 
         TypedQuery<Employee> employeeQuery = entityManager.createQuery("FROM Employee", Employee.class);

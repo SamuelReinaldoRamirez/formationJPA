@@ -10,11 +10,16 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Employee")
+@NamedQueries({
+	@NamedQuery(name = "employee.byjobTitle", query = "SELECT employee FROM Employee employee JOIN employee.jobs as job WHERE job.jobTitle = :jobTitlee")
+})
 public class Employee extends Person implements Serializable {
 
 //	@Id
