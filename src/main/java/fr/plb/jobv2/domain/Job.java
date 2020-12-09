@@ -15,8 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name="Job")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Job implements Serializable {
 
 	@Id

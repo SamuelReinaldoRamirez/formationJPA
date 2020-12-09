@@ -15,11 +15,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name = "Employee")
 @NamedQueries({
 	@NamedQuery(name = "employee.byjobTitle", query = "SELECT employee FROM Employee employee JOIN employee.jobs as job WHERE job.jobTitle = :jobTitlee")
 })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Employee extends Person implements Serializable {
 
 //	@Id
@@ -59,6 +63,7 @@ public class Employee extends Person implements Serializable {
 //	@OneToMany(mappedBy = "employee")
 	//pour n'avoir à persister qu'employee et que job suive
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "employee")
+	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Job> jobs = new HashSet<>();
 
 	@ManyToOne
