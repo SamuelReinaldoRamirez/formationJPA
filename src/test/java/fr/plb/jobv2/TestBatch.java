@@ -97,7 +97,7 @@ public class TestBatch {
 			String query = "SELECT employee FROM Employee employee";
 			TypedQuery<Employee> employeeTypedQuery = entityManager.createQuery(query, Employee.class);
 			employeeTypedQuery.setFirstResult(i);
-			employeeTypedQuery.setMaxResults(i+20);
+			employeeTypedQuery.setMaxResults(20);
 			List<Employee> resultList = employeeTypedQuery.getResultList();
 			for (Employee employee : resultList) {
 				employee.setSalary(employee.getSalary()+3L);
